@@ -103,7 +103,7 @@ begin
       end
 
       # 64 is how many items are in -most- item stacks.
-      cost =  cost. / (64.0 / amount.to_i)
+      cost =  cost / (64.0 / amount.to_i)
       if cost == 0
         cost = 1
       end
