@@ -3,6 +3,7 @@ require './DragLabel.rb'
 require './WorkflowWidget.rb'
 
 class MainWidget < Qt::Widget
+  slots 'submit()'
 
   def initialize
     super
@@ -36,7 +37,7 @@ class MainWidget < Qt::Widget
     vbox.addWidget(drag_service_2)
     vbox.addWidget(drag_service_3)
     vbox.addWidget(publish_button)
-    @hbox.addLayout vbox, 0
+    @hbox.addLayout(vbox, 0)
 
     #setup_frame = WorkflowWidget.new
     #vbox = Qt::VBoxLayout.new
@@ -46,7 +47,17 @@ class MainWidget < Qt::Widget
     workflow_frame.setFrameStyle(Qt::Frame::StyledPanel)
     #workflow_frame.setFrameShape(Qt::Frame::Box)
     #workflow_frame.setFixedSize(200,200)
-    grid_layout = Qt::GridLayout.new
+    @grid_layout = Qt::GridLayout.new
+    @grid_layout.setVerticalSpacing(10)
+
+    6.times do |i|
+      6.times do |j|
+        drag_label = DragLabel.new
+        #drag_label.setFont(Qt::Font.new("Arial",14))
+        @grid_layout.addWidget(drag_label, i, j)
+      end
+    end
+    workflow_frame.setLayout(@grid_layout)
 
     #@hbox.addLayout(vbox)
     @hbox.addWidget(workflow_frame)
@@ -61,8 +72,13 @@ class MainWidget < Qt::Widget
     vbox.addWidget(out_label)
     vbox.addWidget(submit_button)
     @hbox.addLayout(vbox, 0)
+
+    connect(submit_button, SIGNAL('clicked()'), self, SLOT('submit()'))
   end
 
   def init_menus
+  end
+
+  def submit()
   end
 end
