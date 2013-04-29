@@ -92,7 +92,7 @@ begin
     def find_id_cost(item, amount)
       itemID, cost = 0, 0
 
-      if not ids[item].nil? then
+      if not @@ids[item].nil? then
         itemID, cost = @@ids[item][0], @@ids[item][1]
       else
         return false
