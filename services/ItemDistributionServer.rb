@@ -1,6 +1,7 @@
-require "soap/rpc/standaloneserver"
+require "soap/rpc/standaloneServer"
+
 begin
-  class ItemDistributionServer < Soap::RPC::StandaloneServer
+  class ItemDistributionServer < SOAP::RPC::StandaloneServer
     def initialize(*args)
       super(args[0], args[1], args[2], args[3])
       add_method(self, 'distribute', 'user', 'item', 'quantity')
@@ -9,7 +10,7 @@ begin
     def distribute(user, item, quantity)
       #Break up the command because " and ' get out of control otherwise.
       partial = "\\\"$(eval echo \"give #{user} #{item} #{quantity}\")\\\""
-      system("sudo su minecraft bash -c \"screen -p 0 -S TekkitServer -X eval 'stuff "+partial+"\\015'\"")
+      return system("sudo su minecraft bash -c \"screen -p 0 -S TekkitServer -X eval 'stuff #{partial}\\015'\"")
     end
   end
 
@@ -18,6 +19,8 @@ begin
     server.shutdown
   }
   server.start
-rescue
-  # Do nothing.
+
+rescue => err
+  # Something went wrong... obviously.
+  puts err.message
 end
