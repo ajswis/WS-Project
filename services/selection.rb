@@ -118,16 +118,12 @@ begin
 		puts cost
 
 
-<<<<<<< HEAD
-	Items = ItemSelection.new("Main", urn:ruby:ItemSelection, orthrus.kyliejo.com, 8080)
-=======
-	Items = ItemSelection.new("Main",
+	items = ItemSelection.new("Main",
 		'urn:ruby:ItemSelection', 'orthrus.kyliejo.com', 8080)
->>>>>>> db0e7ffd53da5f53c57b7d870f1e2dcc3bc46466
 	trap ('INT') {
 		Items.shutdown
 	}
-	Items.start
+	items.start
 
 
 
@@ -135,7 +131,4 @@ begin
 	end
 rescue
 end
-<<<<<<< HEAD
-=======
 #c = ItemSelection.new
->>>>>>> db0e7ffd53da5f53c57b7d870f1e2dcc3bc46466
