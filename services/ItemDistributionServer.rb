@@ -7,8 +7,8 @@ begin
 
     def distribute(user, item, quantity)
       #Break up the command because " and ' get out of control otherwise.
-      info = "\\\"$(eval echo \"give #{user} #{item} #{quantity}\")\\\""
-      system("sudo su minecraft bash -c \"screen -p 0 -S TekkitServer -X eval 'stuff "+info+"\\015'\"")
+      partial = "\\\"$(eval echo \"give #{user} #{item} #{quantity}\")\\\""
+      system("sudo su minecraft bash -c \"screen -p 0 -S TekkitServer -X eval 'stuff "+partial+"\\015'\"")
     end
   end
 

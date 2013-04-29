@@ -6,7 +6,7 @@ begin
 			add_method(self, 'credit_check', 'user', 'cost', 'item', 'quantity')
 		end
 
-		def credit_check (user, cost, item, quantity)	
+		def credit_check (user, cost, item, quantity)
 			require "zlib"
 
 			begin
@@ -27,7 +27,7 @@ begin
 							break
 						end
 					elsif byte == rite_bites[rb_counter] then
-						rb_counter += 1	
+						rb_counter += 1
 					else
 						rb_counter = 0
 					end
@@ -45,15 +45,16 @@ begin
 				return false
 			end
 		end
-			
-		def take_exp (user, cost, quantity)	
+
+		def take_exp (user, cost, quantity)
 			#if user has enough experience, then remove required cost
-			return system('su minecraft bash -c "screen -p 0 -S TekkitServer -X eval \'stuff \"$(eval echo "xp -#{amount}L #{user}")\"\015\'"')
+      partial = "\\\"$(eval echo \"xp -#{amount}L #{user}\")\\\""
+      return system("sudo su minecraft bash -c \"screen -p 0 -S TekkitServer -X eval 'stuff "+partial+"\\015'\"")
 		end
 	end
 
 	XpCheck = XpCheckServer.new("CreditChecker",
-		urn:ruby:CreditChecker, orthrus.kyliejo.com, 8081)
+		'urn:ruby:CreditChecker', 'localhost', 8081)
 	trap ('INT') {
 		XpCheck.shutdown
 	}
