@@ -1,9 +1,10 @@
 require "soap/rpc/standaloneServer"
+require 'soap/rpc/driver'
 
 begin
 	class XpCheckServer < SOAP::RPC::StandaloneServer
 		def initialize (*args)
-      super(args[0], args[1], args[2], args[3])
+      		super(args[0], args[1], args[2], args[3])
 			add_method(self, 'credit_check', 'user', 'cost', 'item', 'quantity')
 		end
 
