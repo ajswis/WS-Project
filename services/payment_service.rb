@@ -1,12 +1,14 @@
-require "soap/rpc/standaloneserver"
+require "soap/rpc/standaloneServer"
+require 'soap/rpc/driver'
 
 begin
 	class XpCheckServer < SOAP::RPC::StandaloneServer
 		def initialize (*args)
+      		super(args[0], args[1], args[2], args[3])
 			add_method(self, 'credit_check', 'user', 'cost', 'item', 'quantity')
 		end
 
-		def credit_check (user, cost, item, quantity)	
+		def credit_check (user, cost, item, quantity)
 			require "zlib"
 
 			begin
@@ -27,7 +29,7 @@ begin
 							break
 						end
 					elsif byte == rite_bites[rb_counter] then
-						rb_counter += 1	
+						rb_counter += 1
 					else
 						rb_counter = 0
 					end
@@ -35,7 +37,17 @@ begin
 
 				if level_byte >= cost then
 					if take_exp(user, cost, quantity) then
-						#call drew baby ;)
+						NAMESPACE = 'urn:ruby:distribute'
+						URL = 'orthrus.kyliejo.com:8082'
+
+						begin
+							driver = SOAP::RPC::Driver.new(URL, NAMESPACE)
+							driver.add_method('distribute', 'user', 'item', 'quantity')
+
+							return driver.distribute(user, item, quantity)
+						rescue
+							return false
+						end
 					end
 				else
 					return false
@@ -45,15 +57,16 @@ begin
 				return false
 			end
 		end
-			
-		def take_exp (user, cost, quantity)	
+
+		def take_exp (user, cost, quantity)
 			#if user has enough experience, then remove required cost
-			return system('su minecraft bash -c "screen -p 0 -S TekkitServer -X eval \'stuff \"$(eval echo "xp -#{amount}L #{user}")\"\015\'"')
+      partial = "\\\"$(eval echo \"xp -#{amount}L #{user}\")\\\""
+      return system("sudo su minecraft bash -c \"screen -p 0 -S TekkitServer -X eval 'stuff "+partial+"\\015'\"")
 		end
 	end
 
 	XpCheck = XpCheckServer.new("CreditChecker",
-		urn:ruby:CreditChecker, orthrus.kyliejo.com, 8081)
+		'urn:ruby:creditChecker', 'localhost', 8081)
 	trap ('INT') {
 		XpCheck.shutdown
 	}

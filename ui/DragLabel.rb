@@ -1,10 +1,11 @@
 require 'Qt'
 
-class DragLabel < Qt::Label
+class DragPixmap < Qt::Pixmap
 
-  def initialize(text, allow_drops, parent=nil)
-    super( text, parent )
+  def initialize(img, allow_drops=true, parent=nil)
+    super( img, parent )
     setAcceptDrops(allow_drops)
+    @this_img = img
   end
 
   def dragEnterEvent(event)
@@ -16,7 +17,13 @@ class DragLabel < Qt::Label
   end
 
   def dragLeaveEvent(event)
-    event.accept
+    if @dragging
+      setText("                 ")
+      self.setFrameStyle(0)
+      event.accept
+    else
+      event.ignore
+    end
   end
 
   def mousePressEvent(event)
@@ -28,32 +35,32 @@ class DragLabel < Qt::Label
   def mouseMoveEvent(event)
     return if not event.buttons() & Qt::LeftButton
     return if (@pos - event.pos()).manhattanLength() < Qt::Application.startDragDistance()
-    pix = Qt::Pixmap.new(75,15)
-    painter = Qt::Painter.new
-    painter.begin(pix)
-    painter.fillRect(pix.rect(), Qt::Brush.new(Qt::white))
-    painter.drawText(pix.rect(), Qt::AlignHCenter | Qt::AlignVCenter, self.text)
-    painter.end()
+    #pix = Qt::Pixmap.new(75,15)
+    pix = Qt::Pixmap.new(img)
+
+    #painter = Qt::Painter.new
+    #painter.begin(pix)
+    #painter.fillRect(pix.rect(), Qt::Brush.new(Qt::white))
+    #painter.drawText(pix.rect(), Qt::AlignHCenter | Qt::AlignVCenter, self.text)
+    #painter.end()
+
     mimeData = Qt::MimeData.new
-    mimeData.setText(self.text)
+    #mimeData.setText(self.text)
+
     drag = Qt::Drag.new(self)
     drag.setPixmap(pix)
     drag.setMimeData(mimeData)
-    drag.exec(Qt::MoveAction) #Qt::CopyAction |
+    drag.exec(Qt::MoveAction)
+
+    @dragging = true
   end
 
   def dropEvent(event)
     if event.mimeData.hasFormat("text/plain")
-      #service_data = event.mimeData().data("text/plain")
-      #data_stream = Qt::DataStream.new(service_data, Qt::IODevice::ReadOnly)
-      #pixmap = Qt::Pixmap.new
-      #point = Qt::Point.new
-      #data_stream >> pixmap >> point
-
-      #@service_locations.append(point)
-
       text = event.mimeData().text()
-      setText(text)
+      #setText(text)
+
+      self.setFrameStyle(Qt::Frame::StyledPanel)
 
       event.setDropAction(Qt::MoveAction)
       event.accept
