@@ -118,7 +118,7 @@ begin
 
   end
 
-  server = ItemSelectionServer.new("ItemSelection", 'urn:ruby:ItemSelection', 'localhost', 8080)
+  server = ItemSelectionServer.new("ItemSelection", 'urn:ruby:ItemSelection', 'http://orthrus.kyliejo.com/', 8080)
   trap ('INT') {
     server.shutdown
   }
