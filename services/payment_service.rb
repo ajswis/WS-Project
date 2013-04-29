@@ -1,10 +1,9 @@
-#require "soap/rpc/Standaloneserver"
-# gem 'soap4r1.9'
-require 'soap/rpc/standaloneserver'
+require "soap/rpc/standaloneServer"
 
 begin
 	class XpCheckServer < SOAP::RPC::StandaloneServer
 		def initialize (*args)
+      super(args[0], args[1], args[2], args[3])
 			add_method(self, 'credit_check', 'user', 'cost', 'item', 'quantity')
 		end
 

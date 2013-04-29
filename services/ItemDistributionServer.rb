@@ -2,6 +2,7 @@ require "soap/rpc/standaloneserver"
 begin
   class ItemDistributionServer < Soap::RPC::StandaloneServer
     def initialize(*args)
+      super(args[0], args[1], args[2], args[3])
       add_method(self, 'distribute', 'user', 'item', 'quantity')
     end
 

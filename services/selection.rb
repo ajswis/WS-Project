@@ -3,8 +3,9 @@ require "soap/rpc/StandaloneServer"
 
 begin
 	class ItemSelection < SOAP::RPC::StandaloneServer
-		
+
 		def initialize (*args)
+      super(args[0], args[1], args[2], args[3])
 			add_method(self, 'main', args)
 		end
 
@@ -19,7 +20,7 @@ begin
 
 
 
-		def main(string)	
+		def main(string)
 
 			username, item, amount = UserInput(string)
 			ids = GetIds("Ids64.txt")
@@ -59,7 +60,7 @@ begin
 			end
 
 			return ids
-		end 
+		end
 
 
 
@@ -70,7 +71,7 @@ begin
 			cost = 0
 
 			(0..ids.length-1).each do |i|
-				ids[i][0].downcase! 
+				ids[i][0].downcase!
 		   		if item == ids[i][0] then
 		   			itemID = ids[i][1]
 					cost = ids[i][2]
@@ -103,7 +104,7 @@ begin
 
 
 	Items = ItemSelection.new("Main",
-		urn:ruby:ItemSelection, orthrus.kyliejo.com, 8081)
+		'urn:ruby:ItemSelection', 'orthrus.kyliejo.com', 8080)
 	trap ('INT') {
 		Items.shutdown
 	}
