@@ -1,4 +1,6 @@
-require "soap/rpc/standaloneserver"
+#require "soap/rpc/Standaloneserver"
+# gem 'soap4r1.9'
+require 'soap/rpc/standaloneserver'
 
 begin
 	class XpCheckServer < SOAP::RPC::StandaloneServer
