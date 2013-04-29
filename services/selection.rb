@@ -7,9 +7,8 @@ URL = 'orthrus.kyliejo.com:8081'
 
 begin
 	class ItemSelection < SOAP::RPC::StandaloneServer
-
+		
 		def initialize (*args)
-      super(args[0], args[1], args[2], args[3])
 			add_method(self, 'main', args)
 		end
 
@@ -37,7 +36,7 @@ begin
 
 
 
-				return driver.add(username, cost, itemID, amount)
+				return driver.credit_check(username, cost, itemID, amount)
 			rescue
 				return false
 			end
@@ -75,7 +74,7 @@ begin
 			end
 
 			return ids
-		end
+		end 
 
 
 
@@ -86,7 +85,7 @@ begin
 			cost = 0
 
 			(0..ids.length-1).each do |i|
-				ids[i][0].downcase!
+				ids[i][0].downcase! 
 		   		if item == ids[i][0] then
 		   			itemID = ids[i][1]
 					cost = ids[i][2]
@@ -118,12 +117,7 @@ begin
 		puts cost
 
 
-<<<<<<< HEAD
 	Items = ItemSelection.new("Main", urn:ruby:ItemSelection, orthrus.kyliejo.com, 8080)
-=======
-	Items = ItemSelection.new("Main",
-		'urn:ruby:ItemSelection', 'orthrus.kyliejo.com', 8080)
->>>>>>> db0e7ffd53da5f53c57b7d870f1e2dcc3bc46466
 	trap ('INT') {
 		Items.shutdown
 	}
@@ -135,7 +129,3 @@ begin
 	end
 rescue
 end
-<<<<<<< HEAD
-=======
-#c = ItemSelection.new
->>>>>>> db0e7ffd53da5f53c57b7d870f1e2dcc3bc46466
