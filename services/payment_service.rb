@@ -54,6 +54,7 @@ begin
 
 	XpCheck = XpCheckServer.new("CreditChecker",
 		urn:ruby:CreditChecker, orthrus.kyliejo.com, 8081)
+	XpCheck.start
 rescue => err
 	puts err.message
 end
