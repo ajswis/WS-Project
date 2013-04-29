@@ -105,9 +105,8 @@ begin
         return false
       end
 
-      stack_value = 64.0
-
-      cost =  cost.to_i / (stack_value / amount.to_i)
+      # 64 is how many items are in -most- item stacks.
+      cost =  cost.to_i / (64.0 / amount.to_i)
       if cost == 0
         cost = 1
       end
@@ -119,7 +118,7 @@ begin
 
   end
 
-  server = ItemSelectionServer.new("Main", 'urn:ruby:ItemSelection', 'localhost', 8080)
+  server = ItemSelectionServer.new("ItemSelection", 'urn:ruby:ItemSelection', 'localhost', 8080)
   trap ('INT') {
     server.shutdown
   }
