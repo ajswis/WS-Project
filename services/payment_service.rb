@@ -1,8 +1,11 @@
 require "soap/rpc/standaloneServer"
 require 'soap/rpc/driver'
 
+NAMESPACE = 'urn:ruby:distribute'
+URL = 'http://localhost:8082/'
+
 begin
-	class XpCheckServer < SOAP::RPC::StandaloneServer
+	class XpCheckServer < SOAP::RPC::standaloneServer
 		def initialize (*args)
       		super(args[0], args[1], args[2], args[3])
 			add_method(self, 'credit_check', 'user', 'cost', 'item', 'quantity')
@@ -37,9 +40,6 @@ begin
 
 				if level_byte >= cost then
 					if take_exp(user, cost, quantity) then
-						NAMESPACE = 'urn:ruby:distribute'
-						URL = 'orthrus.kyliejo.com:8082'
-
 						begin
 							driver = SOAP::RPC::Driver.new(URL, NAMESPACE)
 							driver.add_method('distribute', 'user', 'item', 'quantity')
@@ -60,8 +60,8 @@ begin
 
 		def take_exp (user, cost, quantity)
 			#if user has enough experience, then remove required cost
-      partial = "\\\"$(eval echo \"xp -#{amount}L #{user}\")\\\""
-      return system("sudo su minecraft bash -c \"screen -p 0 -S TekkitServer -X eval 'stuff "+partial+"\\015'\"")
+     	 	partial = "\\\"$(eval echo \"xp -#{amount}L #{user}\")\\\""
+      		return system("sudo su minecraft bash -c \"screen -p 0 -S TekkitServer -X eval 'stuff "+partial+"\\015'\"")
 		end
 	end
 
