@@ -1,4 +1,8 @@
 class XpCheckServer < SOAP::RPC::StandaloneServer
+	def initialize (*args)
+		add_method(self, 'credit_check', 'user', 'cost', 'item', 'quantity')
+	end
+
 	def credit_check (user, cost, item, quantity)	
 		require "zlib"
 
