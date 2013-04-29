@@ -18,7 +18,7 @@ begin
         # Read in <user>.dat file and parse for XpLevel (58704c6576656c)
         # after XpLevel is found, the 2nd and 3rd
         # following bytes represent the level
-        file = Zlib::GzipReader.new(open("#{user}.dat"))
+        file = Zlib::GzipReader.new(open("/home/minecraft/TekkiteServer/player/#{user}.dat"))
         rite_bites = [0x58, 0x70, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x00]
 
         rb_counter = 0
