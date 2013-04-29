@@ -1,5 +1,9 @@
 #!/usr/bin/ruby
-require "soap/rpc/StandaloneServer"
+require 'soap/rpc/StandaloneServer'
+require 'soap/rpc/driver'
+
+NAMESPACE = 'urn:ruby:creditCheck'
+URL = 'orthrus.kyliejo.com:8081'
 
 begin
 	class ItemSelection < SOAP::RPC::StandaloneServer
@@ -19,13 +23,24 @@ begin
 
 
 
-		def main(string)	
+		def main(string)
 
 			username, item, amount = UserInput(string)
 			ids = GetIds("Ids64.txt")
 			itemID, cost = findIdCost(item, ids, amount)
 
-			return username, itemID, amount, cost
+			begin
+				driver = SOAP::RPC::Driver.new(URL, NAMESPACE)
+
+				driver.add_method('credit_check', 'user', 'cost', 'item', 'quantity')
+
+
+
+				return driver.add(username, cost, itemID, amount)
+			rescue
+				return false
+			end
+
 		end
 
 
@@ -102,8 +117,7 @@ begin
 		puts cost
 
 
-	Items = ItemSelection.new("Main",
-		urn:ruby:ItemSelection, orthrus.kyliejo.com, 8080)
+	Items = ItemSelection.new("Main", urn:ruby:ItemSelection, orthrus.kyliejo.com, 8080)
 	trap ('INT') {
 		Items.shutdown
 	}
@@ -115,4 +129,3 @@ begin
 	end
 rescue
 end
-#c = ItemSelection.new
