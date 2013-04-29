@@ -38,11 +38,11 @@ begin
           end
         end
 
-				if level_byte >= cost then
-					if take_exp(user, cost, quantity) then
-						begin
-							driver = SOAP::RPC::Driver.new($URL, $NAMESPACE)
-							driver.add_method('distribute', 'user', 'item', 'quantity')
+        if level_byte >= cost then
+          if take_exp(user, cost, quantity) then
+            begin
+              driver = SOAP::RPC::Driver.new($URL, $NAMESPACE)
+              driver.add_method('distribute', 'user', 'item', 'quantity')
 
               return driver.distribute(user, item, quantity)
             rescue
@@ -61,19 +61,20 @@ begin
       end
     end
 
-		def take_exp (user, cost, quantity)
-			#if user has enough experience, then remove required cost
-     	 	partial = "\\\"$(eval echo \"xp -#{amount}L #{user}\")\\\""
-      		return system("sudo su minecraft bash -c \"screen -p 0 -S TekkitServer -X eval 'stuff "+partial+"\\015'\"")
-		end
-	end
+    def take_exp (user, cost, quantity)
+      #if user has enough experience, then remove required cost
+      partial = "\\\"$(eval echo \"xp -#{amount}L #{user}\")\\\""
+      return system("sudo su minecraft bash -c \"screen -p 0 -S TekkitServer -X eval 'stuff "+partial+"\\015'\"")
+    end
+  end
 
-	XpCheck = XpCheckServer.new("CreditChecker",
-		'urn:ruby:creditChecker', 'localhost', 8081)
-	trap ('INT') {
-		XpCheck.shutdown
-	}
-	XpCheck.start
+  XpCheck = XpCheckServer.new("CreditChecker",
+                              'urn:ruby:creditChecker', 'localhost', 8081)
+  trap ('INT') {
+    XpCheck.shutdown
+  }
+  XpCheck.start
+
 rescue => err
-	puts err.message
+  puts err.message
 end
