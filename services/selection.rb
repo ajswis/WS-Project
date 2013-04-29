@@ -103,7 +103,7 @@ begin
 
 
 	Items = ItemSelection.new("Main",
-		urn:ruby:ItemSelection, orthrus.kyliejo.com, 8081)
+		urn:ruby:ItemSelection, orthrus.kyliejo.com, 8080)
 	trap ('INT') {
 		Items.shutdown
 	}
