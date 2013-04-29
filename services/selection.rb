@@ -100,6 +100,18 @@ begin
 		puts itemID
 		puts amount
 		puts cost
+
+
+	Items = ItemSelection.new("Main",
+		urn:ruby:ItemSelection, orthrus.kyliejo.com, 8081)
+	trap ('INT') {
+		Items.shutdown
+	}
+	Items.start
+
+
+
+
 	end
 rescue
 end
