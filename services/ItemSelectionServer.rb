@@ -90,6 +90,10 @@ begin
     end
 
     def find_id_cost(item, amount)
+      if not(item.is_a? String and amount.is_a? Integer) then
+        return false
+      end
+
       itemID, cost = 0, 0
 
       if not @@ids[item].nil? then
@@ -108,7 +112,7 @@ begin
         cost = 1
       end
 
-      cost = cost.round(0)
+      cost = cost.round()
 
       return itemID, cost
     end
