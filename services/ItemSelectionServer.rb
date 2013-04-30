@@ -79,6 +79,10 @@ begin
     end
 
     def item_select(username, item, amount)
+      if amount == 0 then
+        return false
+      end
+
       itemID, cost = find_id_cost(item, amount)
       begin
         driver = SOAP::RPC::Driver.new($URL, $NAMESPACE)
