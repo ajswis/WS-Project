@@ -90,7 +90,7 @@ begin
     end
 
     def find_id_cost(item, amount)
-      if not(item.is_a? String and amount.is_a? Integer) then
+      if not (item.is_a? String and amount.is_a? Integer) then
         return false
       end
 
@@ -108,11 +108,11 @@ begin
 
       # 64 is how many items are in -most- item stacks.
       cost =  cost / (64.0 / amount.to_i)
+      cost = cost.round()
       if cost == 0
         cost = 1
       end
 
-      cost = cost.round()
 
       return itemID, cost
     end
