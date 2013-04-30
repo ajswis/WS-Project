@@ -1,11 +1,10 @@
 require 'Qt'
 
-class DragPixmap < Qt::Pixmap
+class DragLabel < Qt::Label
 
-  def initialize(img, allow_drops=true, parent=nil)
-    super( img, parent )
+  def initialize(text="      ", allow_drops=true, parent=nil)
+    super( text, parent )
     setAcceptDrops(allow_drops)
-    @this_img = img
   end
 
   def dragEnterEvent(event)
@@ -18,7 +17,7 @@ class DragPixmap < Qt::Pixmap
 
   def dragLeaveEvent(event)
     if @dragging
-      setText("                 ")
+      setText("      ")
       self.setFrameStyle(0)
       event.accept
     else
@@ -35,22 +34,18 @@ class DragPixmap < Qt::Pixmap
   def mouseMoveEvent(event)
     return if not event.buttons() & Qt::LeftButton
     return if (@pos - event.pos()).manhattanLength() < Qt::Application.startDragDistance()
-    #pix = Qt::Pixmap.new(75,15)
-    pix = Qt::Pixmap.new(img)
-
-    #painter = Qt::Painter.new
-    #painter.begin(pix)
-    #painter.fillRect(pix.rect(), Qt::Brush.new(Qt::white))
-    #painter.drawText(pix.rect(), Qt::AlignHCenter | Qt::AlignVCenter, self.text)
-    #painter.end()
-
+    pix = Qt::Pixmap.new(130,30)
+    painter = Qt::Painter.new
+    painter.begin(pix)
+    painter.fillRect(pix.rect(), Qt::Brush.new(Qt::white))
+    painter.drawText(pix.rect(), Qt::AlignHCenter | Qt::AlignVCenter, self.text)
+    painter.end()
     mimeData = Qt::MimeData.new
-    #mimeData.setText(self.text)
-
+    mimeData.setText(self.text)
     drag = Qt::Drag.new(self)
     drag.setPixmap(pix)
     drag.setMimeData(mimeData)
-    drag.exec(Qt::MoveAction)
+    drag.exec(Qt::MoveAction) #Qt::CopyAction |
 
     @dragging = true
   end
@@ -58,12 +53,12 @@ class DragPixmap < Qt::Pixmap
   def dropEvent(event)
     if event.mimeData.hasFormat("text/plain")
       text = event.mimeData().text()
-      #setText(text)
-
+      setText(text)
       self.setFrameStyle(Qt::Frame::StyledPanel)
 
       event.setDropAction(Qt::MoveAction)
       event.accept
+      @dragging = false
     else
       event.ignore
     end
