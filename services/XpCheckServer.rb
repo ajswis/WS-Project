@@ -59,7 +59,7 @@ begin
 
       rescue => err
         # Something went wrong find available levels.
-		    puts err.message
+        puts err.message
         return false
       end
     end
@@ -67,7 +67,7 @@ begin
     def take_exp (user, cost, quantity)
       #if user has enough experience, then remove required cost
       partial = "\\\"$(eval echo \"xp -#{cost}L #{user}\")\\\""
-      return system("sudo su minecraft bash -c \"screen -p 0 -S TekkitServer -X eval 'stuff "+partial+"\\015'\"")
+      return system("sudo su minecraft bash -c \"screen -p 0 -S TekkitServer -X eval 'stuff #{partial}\\015'\"")
     end
   end
 
