@@ -2,6 +2,9 @@ require 'Qt'
 require 'soap/rpc/driver'
 require './DragLabel.rb'
 
+# Do NOT leave a trailing '/'
+$HOST_NAME_OF_ITEM_SELECT_SERVICE = "http://orthrus.kyliejo.com"
+
 class MainWidget < Qt::Widget
   slots 'submit()'
 
@@ -78,11 +81,11 @@ class MainWidget < Qt::Widget
         user = Qt::InputDialog.getText(self, "Field 1","Field: Username")
         item = Qt::InputDialog.getText(self, "Field 2","Field: Item")
         amount = Qt::InputDialog.getInt(self, "Field 3","Field: Amount")
-        driver = SOAP::RPC::Driver.new('http://orthrus.kyliejo.com:8080/', 'urn:ruby:ItemSelection')
+        driver = SOAP::RPC::Driver.new("#{$HOST_NAME_OF_ITEM_SELECT_SERVICE}:8080/", 'urn:ruby:ItemSelection')
         driver.add_method("item_select", "username", "item", "amount")
         @out_label.setText(driver.item_select(user, item, amount).to_s)
       rescue
-        # Do nothing if error
+        # Do nothing
       end
     end
   end

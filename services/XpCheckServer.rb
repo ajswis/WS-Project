@@ -13,6 +13,9 @@ $HOST_NAME_OF_SERVICE = 'localhost'
 $SCREEN_NAME = "TekkitServer"
 $USER_RUNNING_MC_SERVER = "minecraft"
 
+# Don't add a trailing '/'
+$PATH_TO_PLAYER_SAVE_FILES = '/home/minecraft/TekkitServer/players'
+
 begin
   class XpCheckServer < SOAP::RPC::StandaloneServer
     def initialize (*args)
@@ -25,7 +28,7 @@ begin
         # Read in <user>.dat file and parse for XpLevel (58704c6576656c)
         # after XpLevel is found, the 2nd and 3rd
         # following bytes represent the level
-        file = Zlib::GzipReader.new(open("/home/minecraft/TekkitServer/players/#{user}.dat"))
+        file = Zlib::GzipReader.new(open("#{$PATH_TO_PLAYER_SAVE_FILES}/#{user}.dat"))
         rite_bites = [0x58, 0x70, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x00]
 
         rb_counter = 0
