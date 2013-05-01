@@ -1,2 +1,0 @@
-test:
-		ruby WorkFlowUI.rb
