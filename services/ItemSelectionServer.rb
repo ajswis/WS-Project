@@ -3,8 +3,11 @@ require 'soap/rpc/standaloneServer'
 require 'soap/rpc/driver'
 
 # Namespace/URL for next service
-$NAMESPACE = 'urn:ruby:creditChecker'
-$URL = 'http://localhost:8081/'
+$NAMESPACE_NEXT_SERVICE = 'urn:ruby:creditChecker'
+$URL_NEXT_SERVICE = 'http://localhost:8081/'
+
+# Location of this service
+$HOST_NAME_OF_SERVICE = 'orthrus.kyliejo.com'
 
 begin
   class ItemSelectionServer < SOAP::RPC::StandaloneServer
@@ -85,7 +88,7 @@ begin
 
       itemID, cost = find_id_cost(item, amount)
       begin
-        driver = SOAP::RPC::Driver.new($URL, $NAMESPACE)
+        driver = SOAP::RPC::Driver.new($URL_NEXT_SERVICE, $NAMESPACE_NEXT_SERVICE)
         driver.add_method('credit_check', 'user', 'cost', 'item', 'quantity')
         return driver.credit_check(username, cost, itemID, amount)
       rescue
@@ -123,7 +126,7 @@ begin
 
   end
 
-  server = ItemSelectionServer.new("ItemSelection", 'urn:ruby:ItemSelection', 'orthrus.kyliejo.com', 8080)
+  server = ItemSelectionServer.new("ItemSelection", 'urn:ruby:ItemSelection', $HOST_NAME_OF_SERVICE, 8080)
   trap ('INT') {
     server.shutdown
   }

@@ -3,8 +3,15 @@ require 'soap/rpc/driver'
 require "zlib"
 
 # Namespace/URL for next service
-$NAMESPACE = 'urn:ruby:distribute'
-$URL = 'http://localhost:8082/'
+$NAMESPACE_NEXT_SERVICE = 'urn:ruby:distribute'
+$URL_NEXT_SERVICE = 'http://localhost:8082/'
+
+# Location of this service
+$HOST_NAME_OF_SERVICE = 'localhost'
+
+# Screen, the Linux program
+$SCREEN_NAME = "TekkitServer"
+$USER_RUNNING_MC_SERVER = "minecraft"
 
 begin
   class XpCheckServer < SOAP::RPC::StandaloneServer
@@ -41,7 +48,7 @@ begin
         if level_byte >= cost then
           if take_exp(user, cost, quantity) then
             begin
-              driver = SOAP::RPC::Driver.new($URL, $NAMESPACE)
+              driver = SOAP::RPC::Driver.new($URL_NEXT_SERVICE, $NAMESPACE_NEXT_SERVICE)
               driver.add_method('distribute', 'user', 'item', 'quantity')
 
               return driver.distribute(user, item, quantity)
@@ -67,12 +74,12 @@ begin
     def take_exp (user, cost, quantity)
       #if user has enough experience, then remove required cost
       partial = "\\\"$(eval echo \"xp -#{cost}L #{user}\")\\\""
-      return system("sudo su minecraft bash -c \"screen -p 0 -S TekkitServer -X eval 'stuff #{partial}\\015'\"")
+      return system("sudo su #{$USER_RUNNING_MC_SERVER} bash -c \"screen -p 0 -S #{$SCREEN_NAME} -X eval 'stuff #{partial}\\015'\"")
     end
   end
 
   XpCheck = XpCheckServer.new("CreditChecker",
-                              'urn:ruby:creditChecker', 'localhost', 8081)
+                              'urn:ruby:creditChecker', $HOST_NAME_OF_SERVICE, 8081)
   trap ('INT') {
     XpCheck.shutdown
   }
