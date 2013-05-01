@@ -29,10 +29,10 @@ Once the screen is running, start the minecraft server with
 
     java -jar /path/to/minecraft-server.jar
 
-A folder with configuration files and other data will be generated at the location of the server .jar file. You will need to know this location later.
+A folder with configuration files and other data will be generated at the location of the server .jar file. You will need to know this location later. You can now exit the screen by pressing ```CTRL+A``` then ```d```.
 
 Next, you need to get the three services up and running. You should modify each script to match the information for your minecraft server and screen session. The ```$HOST_NAME_OF_SERVICE``` for each service should be where the ruby file will execute. The value of the ```$SCREEN_NAME``` should be the name you gave to the screen session when you started the minecraft server. ```$USER_RUNNING_MC_SERVER``` should contain the user you ran the server as. **If you didn't execute the server as different user, this will still need to be set to whatever your username is.** For the XpCheckServer.rb, you need to set the path to player save file. The location will be somewhere within the folder created by the server .jar file, typically in another folder called ```world```.
 
-The last thing to do is run the ui. You can call it by typing ```./WorkFlowUi.rb``` or ```ruby WorkFlowUI.rb``` from the ```ui/``` directory. Now all you need to do is drag some elements and click submit. You will need to provide a target user. This should be a username picked when creating a Mojang account.
+The last thing to do is run the ui. Before running the ui, change the value ```$HOST_NAME_OF_ITEM_SELECT_SERVICE``` in WainWidget.rb to the URL or IP of where the first service is running. More than likely, you are running it locally, so just change it to localhost. Now, call the UI by typing ```./WorkFlowUi.rb``` or ```ruby WorkFlowUI.rb``` from the ```ui/``` directory. Now all you need to do is drag some elements and click submit. You will need to provide a target user. This should be a username picked when creating a Mojang account.
 
 Unfortunately, to actually test if the services have given you items, you need to purchase access to the Minecraft game from Mojang and log on the server via the Minecraft client (also downloadable from http://www.minecraft.net/download).
