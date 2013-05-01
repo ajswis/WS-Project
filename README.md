@@ -14,12 +14,12 @@ Not necessary as this is written in Ruby.
 
 Installing
 ------------
-Before trying to install the system, you should only try to run this on a linux platform. You will need the following software:
+Before trying to install the system, you should only try to run this on a Linux platform. You will need the following software:
 - Java 1.6+
 - Minecraft Server from http://www.minecraft.net/download
 - Ruby 1.9+
 - The Ruby gem 'soap4r-ruby1.9' (```gem install soap4r-ruby1.9```)
-- Qt Ruby bindings. (```libqtruby4shared2``` on Ubuntu distributions, ```kdebindings-qtruby``` on Archlinux)
+- Qt Ruby bindings. (```libqtruby4shared2``` on Ubuntu distributions, ```kdebindings-qtruby``` on ArchLinux)
 
 First, start off by running a minecraft server in a screen. You will need to know the name of the screen, so I recommend naming it something memorable:
 
