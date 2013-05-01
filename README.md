@@ -12,7 +12,7 @@ Compilation
 ------------
 Not necessary as this is written in Ruby.
 
-Installing
+Installation and Usage
 ------------
 Before trying to install the system, you should only try to run this on a Linux platform. You will need the following software:
 - Java 1.6+
