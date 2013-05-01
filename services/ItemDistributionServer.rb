@@ -22,7 +22,7 @@ begin
         quantity -= 64
       end
       partial = "\\\"$(eval echo \"give #{user} #{item} #{quantity}\")\\\""
-      return system("sudo su #{$USER_RUNNING_MC_SERVER} bash -c \"screen -p 0 -S #{SCREEN_NAME} -X eval 'stuff #{partial}\\015'\"")
+      return system("sudo su #{$USER_RUNNING_MC_SERVER} bash -c \"screen -p 0 -S #{$SCREEN_NAME} -X eval 'stuff #{partial}\\015'\"")
     end
   end
 
