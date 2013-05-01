@@ -22,13 +22,9 @@ Before trying to install the system, you should only try to run this on a linux 
 - Qt Ruby bindings. (```libqtruby4shared2``` on Ubuntu distributions, ```kdebindings-qtruby``` on Archlinux)
 
 First, start off by running a minecraft server in a screen. You will need to know the name of the screen, so I recommend naming it something memorable:
-
     screen -S MinecraftServer
-
 Once the screen is running, start the minecraft server with
-
     java -jar /path/to/minecraft-server.jar
-
 A folder with configuration files and other data will be generated at the location of the server .jar file. You will need to know this location later.
 
 Next, you need to get the three services up and running. You should modify each script to match the information for your minecraft server and screen session. The ```$HOST_NAME_OF_SERVICE``` for each service should be where the ruby file will execute. The value of the ```$SCREEN_NAME``` should be the name you gave to the screen session when you started the minecraft server. ```$USER_RUNNING_MC_SERVER``` should contain the user you ran the server as. **If you didn't execute the server as different user, this will still need to be set to whatever your username is.** For the XpCheckServer.rb, you need to set the path to player save file. The location will be somewhere within the folder created by the server .jar file, typically in another folder called ```world```.
