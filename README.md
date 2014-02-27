@@ -6,7 +6,6 @@ Group Members
 -	Andrew Swistak
 -	Kylie Jo Infield
 -	Kenneth Brown
--	Josh Jenkins
 
 Compilation
 ------------
